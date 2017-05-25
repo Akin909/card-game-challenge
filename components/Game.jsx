@@ -24,29 +24,52 @@ class Game extends Component {
     hearts: new suite('diamonds'),
     clubs: new suite('clubs'),
     diamonds: new suite('diamonds'),
+    value: '',
   };
 
   pickAtRandom = array => Math.floor(Math.random() * array.length);
 
   handleClick = event => {
+    Array.from({ length: Number(this.state.value) }, () => this.dealCards());
+    console.log('state', this.state);
+  };
+
+  dealCards = () => {
     const cardTypes = Object.keys(this.state.spades);
-    const suiteTypes = Object.keys(this.state);
+    const suiteTypes = Object.keys(this.state).slice(0, -1);
     const chosenSuite = suiteTypes[this.pickAtRandom(suiteTypes)];
     const chosenKey = cardTypes[this.pickAtRandom(cardTypes)];
     console.log(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
-    this.setState({
-      [chosenSuite]: {
-        ...this.state[chosenSuite],
-        [chosenKey]: 0,
-      },
-    });
-    console.log('state', this.state);
+    this.state[chosenSuite][chosenKey] !== 0
+      ? this.setState({
+          [chosenSuite]: {
+            ...this.state[chosenSuite],
+            [chosenKey]: 0,
+          },
+        })
+      : this.dealCards();
   };
+
+  handleChange = event => this.setState({ value: event.target.value });
 
   render() {
     return (
       <div>
-        stuff <button onClick={this.handleClick}> Change State </button>{' '}
+        <button onClick={this.handleClick}>Deal a Hand</button>
+        <input
+          type="text"
+          placeholder="Number of hands"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+        <div>
+          {Object.keys(this.state).slice(0, -1).map(key => (
+            <div>
+              <p>{key}</p>
+              <pre>{JSON.stringify(this.state[key], undefined, 2)}</pre>
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
