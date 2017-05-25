@@ -9,6 +9,7 @@ class Game extends Component {
   state = {
     value: '',
     cards: Deck,
+    lastGame: {},
     players: 2,
     scores: [],
   };
@@ -22,7 +23,7 @@ class Game extends Component {
     return {
       nextScore,
       firstScore,
-      totalScore,
+      //totalScore,
     };
   };
 
@@ -31,11 +32,12 @@ class Game extends Component {
     const { players, cards } = this.state;
     //This returns an array of objects which represents the deck at each point in the shuffle
     const newDeck = Array.from({ length: Number(noOfCards) * players }, () =>
+      //TODO need to pass in hand rather than use a global object
       dealCards(cards, noOfCards)
     );
     //Set state to the deck at the end of the shuffle
     this.setState({
-      cards: newDeck.slice(-1),
+      lastGame: newDeck.slice(-1),
       scores: this.calculateScore(hand),
     });
   };
@@ -44,11 +46,15 @@ class Game extends Component {
 
   render() {
     const { scores, cards, value } = this.state;
+    const winner = Object.keys(scores).filter(
+      (player, nextPlayer) =>
+        scores[player] > scores[nextPlayer] ? player : nextPlayer
+    );
     return (
       <div>
-        {Object.values(scores).map((score, index) => (
-          <div key={uuid()}>{`${index + 1}: ${score}`}</div>
-        ))}
+        <div key={uuid()}>
+          {winner.length > 0 && `${winner} Wins!`}
+        </div>
         <button onClick={this.handleClick}>Deal a Hand</button>
         <input
           type="text"
