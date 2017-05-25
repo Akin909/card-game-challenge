@@ -1,18 +1,18 @@
 class Suite {
   constructor(props) {
-    this.jack = 1;
-    this.queen = 1;
-    this.king = 1;
-    this.ace = 1;
-    this.two = 1;
-    this.three = 1;
-    this.four = 1;
-    this.five = 1;
-    this.six = 1;
-    this.seven = 1;
-    this.eight = 1;
-    this.nine = 1;
-    this.ten = 1;
+    this.jack = { number: 1, value: 11 };
+    this.queen = { number: 1, value: 12 };
+    this.king = { number: 1, value: 13 };
+    this.ace = { number: 1, value: 1 };
+    this.two = { number: 1, value: 1 };
+    this.three = { number: 1, value: 1 };
+    this.four = { number: 1, value: 1 };
+    this.five = { number: 1, value: 1 };
+    this.six = { number: 1, value: 1 };
+    this.seven = { number: 1, value: 1 };
+    this.eight = { number: 1, value: 1 };
+    this.nine = { number: 1, value: 1 };
+    this.ten = { number: 1, value: 1 };
   }
 }
 
@@ -30,15 +30,19 @@ export const hand = [];
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
 
-
-export const dealCards = deck => {
+export const dealCards = (deck, noOfCards) => {
   //TODO refactor as these are recreated each time
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
   replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
   deck[chosenSuite][chosenKey] !== 0
-    ? (deck[chosenSuite][chosenKey] = 0)
+    ? (deck[chosenSuite][chosenKey].number = 0)
     : dealCards(deck);
-  hand.push({ description: `${chosenKey} of ${chosenSuite}` });
-  return deck;
+  hand.push({
+    description: `${chosenKey} of ${chosenSuite}`,
+    value: deck[chosenSuite][chosenKey].value,
+  });
+  return {
+    deck,
+  };
 };
