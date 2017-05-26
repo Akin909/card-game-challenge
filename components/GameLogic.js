@@ -61,6 +61,7 @@ export const determineWinner = (array, objArray) =>
 export const calculateScore = (hand, players) => {
   const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
+  console.log('chunkSize', chunkSize);
   const allScores = hand
     .map(
       (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)

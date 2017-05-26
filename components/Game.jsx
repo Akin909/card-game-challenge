@@ -20,19 +20,25 @@ import Card from './Card.jsx';
 
 class Game extends Component {
   state = {
-    value: '',
+    input: '',
+    select: '',
     cards: Deck,
     lastGame: {},
-    players: 2,
     scores: {},
     hand: [],
   };
 
   handleClick = event => {
-    const noOfCards = this.state.value;
-    const { players, cards, hand } = this.state;
+    const { select, cards, hand, input } = this.state;
+    const noOfCards = Number(input);
+    const players = Number(select);
     //This returns an array of objects which represents the deck at each point in the shuffle
-    const newDeck = Array.from({ length: Number(noOfCards) * players }, () =>
+    if (noOfCards >= 26) {
+      return alert(
+        'There are only 52 cards in a deck.. please enter a smaller number of cards to deal'
+      );
+    }
+    const newDeck = Array.from({ length: noOfCards * (players || 2) }, () =>
       //TODO need to pass in hand rather than use a global object
       dealCards(cards, noOfCards, hand)
     );
@@ -40,16 +46,17 @@ class Game extends Component {
     const currentDeck = newDeck.slice(-1);
     this.setState({
       lastGame: currentDeck,
-      scores: calculateScore(currentDeck[0].hand, this.state.players),
+      scores: calculateScore(currentDeck[0].hand, players),
       hand: [],
     });
   };
 
-  handleChange = event => this.setState({ value: event.target.value });
+  handleChange = event =>
+    this.setState({ [event.target.name]: event.target.value });
 
   render() {
     const { scores, cards, value, hand } = this.state;
-    console.log('scores', scores.eachScore);
+    console.log('state', this.state);
     return (
       <div>
         <Score>
@@ -60,11 +67,22 @@ class Game extends Component {
         </Score>
         <Intro>
           <input
+            name="input"
             type="text"
             placeholder="Number of hands"
             value={value}
             onChange={this.handleChange}
           />
+          <select
+            id="players"
+            name="select"
+            value={this.state.select}
+            onChange={this.handleChange}
+          >
+            {Array.from({ length: 52 }, (option, index) => (
+              <option value={index} key={uuid()}>{index}</option>
+            ))}
+          </select>
           <button onClick={this.handleClick}>Deal a Hand</button>
         </Intro>
         <GameStatus>
