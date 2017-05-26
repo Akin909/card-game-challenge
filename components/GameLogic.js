@@ -30,7 +30,7 @@ export const hand = [];
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
 
-export const dealCards = (deck, noOfCards, aHand) => {
+export const dealCards = (deck, noOfCards, hand) => {
   //TODO refactor as these are recreated each time
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
@@ -38,12 +38,45 @@ export const dealCards = (deck, noOfCards, aHand) => {
   deck[chosenSuite][chosenKey] !== 0
     ? (deck[chosenSuite][chosenKey].number = 0)
     : dealCards(deck);
-  aHand.push({
+  hand.push({
     description: `${chosenKey} of ${chosenSuite}`,
     value: deck[chosenSuite][chosenKey].value,
   });
   return {
     deck,
-    hand: aHand,
+    hand,
+  };
+};
+
+const sum = arr => arr.reduce((current, next) => current + next);
+
+export const determineWinner = (array, objArray) =>
+  array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
+    ? 'Tie'
+    : objArray.reduce(
+        (value, nextVal) =>
+          value.score === Math.max(...array) ? value.player : nextVal.player
+      );
+
+export const calculateScore = (hand, players) => {
+  const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
+  const chunkSize = hand.length / players;
+  const allScores = hand
+    .map(
+      (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)
+    )
+    .filter(hands => hands);
+  const cardValues = allScores.map(arr => arr.map(card => card.value));
+  const numericalScores = cardValues.map(sum);
+  const eachScore = numericalScores.map((score, i) => ({
+    ['player']: `Player ${i + 1}`,
+    score,
+  }));
+  const winner = determineWinner(numericalScores, eachScore);
+
+  return {
+    eachScore,
+    winner,
+    allScores,
   };
 };

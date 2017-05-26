@@ -5,6 +5,10 @@ export const CardContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  > h3 {
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 export const AppContainer = styled.div`
@@ -42,4 +46,15 @@ export const Replay = styled.ul`
   justify-content: center;
   align-items: center;
   padding: 0;
+`;
+
+export const Score = styled.h2`
+  color: skyblue;
+  text-align: center;
+`;
+
+export const GameStatus = styled.div`
+  width: 100%;
+  height: 30%;
+  display: flex;
 `;

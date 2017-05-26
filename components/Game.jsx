@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 
-import { Deck, dealCards, replay } from './GameLogic';
-import { CardContainer, Intro, Replay } from './Styled.jsx';
+import {
+  Deck,
+  dealCards,
+  replay,
+  calculateScore,
+  determineWinner,
+} from './GameLogic';
+import {
+  GameStatus,
+  Players,
+  Score,
+  CardContainer,
+  Intro,
+  Replay,
+} from './Styled.jsx';
 import Card from './Card.jsx';
 
 class Game extends Component {
@@ -11,21 +24,8 @@ class Game extends Component {
     cards: Deck,
     lastGame: {},
     players: 2,
-    scores: [],
+    scores: {},
     hand: [],
-  };
-
-  calculateScore = hand => {
-    const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
-    const firstScore = hand
-      .slice(0, hand.length / this.state.players)
-      .reduce((sum, card) => sum + card.value, 0);
-    const nextScore = totalScore - firstScore;
-    return {
-      nextScore,
-      firstScore,
-      //totalScore,
-    };
   };
 
   handleClick = event => {
@@ -40,7 +40,8 @@ class Game extends Component {
     const currentDeck = newDeck.slice(-1);
     this.setState({
       lastGame: currentDeck,
-      scores: this.calculateScore(currentDeck[0].hand),
+      scores: calculateScore(currentDeck[0].hand, this.state.players),
+      hand: [],
     });
   };
 
@@ -48,14 +49,15 @@ class Game extends Component {
 
   render() {
     const { scores, cards, value, hand } = this.state;
-    const winner = Object.keys(scores).filter(
-      (player, nextPlayer) =>
-        scores[player] > scores[nextPlayer] ? player : nextPlayer
-    );
     return (
       <div>
+        <Score>
+          {scores.winner &&
+            (scores.winner === 'Tie'
+              ? scores.winner
+              : `${scores.winner} Wins!`)}
+        </Score>
         <Intro>
-          {winner.length > 0 && `${winner} Wins!, Score: ${scores[winner]}`}
           <input
             type="text"
             placeholder="Number of hands"
@@ -64,11 +66,17 @@ class Game extends Component {
           />
           <button onClick={this.handleClick}>Deal a Hand</button>
         </Intro>
-        <CardContainer>
-          {hand.map(card => (
-            <Card key={uuid()} description={card.description} />
-          ))}
-        </CardContainer>
+        <GameStatus>
+          {scores.allScores &&
+            scores.allScores.map((player, index) => (
+              <CardContainer key={uuid()}>
+                <h3>{'Player ' + (index + 1)}</h3>
+                {player.map(card => (
+                  <Card key={uuid()} description={card.description} />
+                ))}
+              </CardContainer>
+            ))}
+        </GameStatus>
         <div>
           <Replay>
             {replay.map(step => <li key={uuid()}>{step}</li>)}
