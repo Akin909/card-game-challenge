@@ -49,6 +49,7 @@ class Game extends Component {
 
   render() {
     const { scores, cards, value, hand } = this.state;
+    console.log('scores', scores.eachScore);
     return (
       <div>
         <Score>
@@ -70,7 +71,8 @@ class Game extends Component {
           {scores.allScores &&
             scores.allScores.map((player, index) => (
               <CardContainer key={uuid()}>
-                <h3>{'Player ' + (index + 1)}</h3>
+                <h3
+                >{`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}</h3>
                 {player.map(card => (
                   <Card key={uuid()} description={card.description} />
                 ))}
