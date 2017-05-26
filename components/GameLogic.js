@@ -30,7 +30,8 @@ export const hand = [];
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
 
-export const dealCards = (deck, noOfCards, hand) => {
+export const dealCards = (deck, noOfCards, hand, players) => {
+  if (players * noOfCards > 52) return new Error('There won\'t be enough cards for everybody 🙇');
   //TODO refactor as these are recreated each time
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
@@ -61,7 +62,6 @@ export const determineWinner = (array, objArray) =>
 export const calculateScore = (hand, players) => {
   const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
-  console.log('chunkSize', chunkSize);
   const allScores = hand
     .map(
       (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)

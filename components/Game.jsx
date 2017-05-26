@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid';
 
-import {
-  Deck,
-  dealCards,
-  replay,
-  calculateScore,
-  determineWinner,
-} from './GameLogic';
+import * as l from './GameLogic';
 import {
   GameStatus,
   Players,
@@ -22,7 +16,7 @@ class Game extends Component {
   state = {
     input: '',
     select: '',
-    cards: Deck,
+    cards: l.Deck,
     lastGame: {},
     scores: {},
     hand: [],
@@ -39,14 +33,18 @@ class Game extends Component {
       );
     }
     const newDeck = Array.from({ length: noOfCards * (players || 2) }, () =>
-      //TODO need to pass in hand rather than use a global object
-      dealCards(cards, noOfCards, hand)
+      l.dealCards(cards, noOfCards, hand, players)
     );
+    if (newDeck[0] instanceof Error) {
+      return this.setState({
+        error: newDeck[0].message,
+      });
+    }
     //Set state to the deck at the end of the shuffle
     const currentDeck = newDeck.slice(-1);
     this.setState({
       lastGame: currentDeck,
-      scores: calculateScore(currentDeck[0].hand, players),
+      scores: l.calculateScore(currentDeck[0].hand, players),
       hand: [],
     });
   };
@@ -55,8 +53,7 @@ class Game extends Component {
     this.setState({ [event.target.name]: event.target.value });
 
   render() {
-    const { scores, cards, value, hand } = this.state;
-    console.log('state', this.state);
+    const { scores, cards, value, hand, error } = this.state;
     return (
       <div>
         <Score>
@@ -66,6 +63,7 @@ class Game extends Component {
               : `${scores.winner} Wins!`)}
         </Score>
         <Intro>
+          {error && <div>{error}</div>}
           <input
             name="input"
             type="text"
@@ -80,7 +78,7 @@ class Game extends Component {
             onChange={this.handleChange}
           >
             {Array.from({ length: 52 }, (option, index) => (
-              <option value={index} key={uuid()}>{index}</option>
+              <option value={index + 1} key={uuid()}>{index + 1}</option>
             ))}
           </select>
           <button onClick={this.handleClick}>Deal a Hand</button>
@@ -99,7 +97,7 @@ class Game extends Component {
         </GameStatus>
         <div>
           <Replay>
-            {replay.map(step => <li key={uuid()}>{step}</li>)}
+            {l.replay.map(step => <li key={uuid()}>{step}</li>)}
           </Replay>
         </div>
       </div>
