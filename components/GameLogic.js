@@ -30,7 +30,7 @@ export const hand = [];
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
 
-export const dealCards = (deck, noOfCards) => {
+export const dealCards = (deck, noOfCards, aHand) => {
   //TODO refactor as these are recreated each time
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
@@ -38,11 +38,12 @@ export const dealCards = (deck, noOfCards) => {
   deck[chosenSuite][chosenKey] !== 0
     ? (deck[chosenSuite][chosenKey].number = 0)
     : dealCards(deck);
-  hand.push({
+  aHand.push({
     description: `${chosenKey} of ${chosenSuite}`,
     value: deck[chosenSuite][chosenKey].value,
   });
   return {
     deck,
+    hand: aHand,
   };
 };

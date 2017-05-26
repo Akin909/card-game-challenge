@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Game from './Game.jsx';
-import { AppContainer } from './Styled.jsx';
+import { AppContainer, Title } from './Styled.jsx';
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class App extends Component {
   render() {
     return (
       <AppContainer>
-        Pixie Labs Card Game
+        <Title>Pixie Labs Card Game</Title>
         <Game />
       </AppContainer>
     );
