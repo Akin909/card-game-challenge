@@ -14,7 +14,7 @@ describe('Test Game Logic', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('sorts an array of arrays', () => {
+  it('sorts an array of arrays by specified priority', () => {
     const sortObj = {
       high: 1,
       medium: 2,
