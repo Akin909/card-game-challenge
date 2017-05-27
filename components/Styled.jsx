@@ -12,12 +12,14 @@ export const CardContainer = styled.div`
 `;
 
 export const AppContainer = styled.div`
+  background-color: #6699CC;
   width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: Helvetica;
+  overflow: scroll;
   > * {
     font-family: inherit;
   }
@@ -35,7 +37,7 @@ export const Intro = styled.section`
 `;
 
 export const Title = styled.h1`
-  color: skyblue;
+  color: white;
 `;
 
 export const Replay = styled.ul`
@@ -49,7 +51,7 @@ export const Replay = styled.ul`
 `;
 
 export const Score = styled.h2`
-  color: skyblue;
+  color: white;
   text-align: center;
 `;
 
@@ -57,4 +59,20 @@ export const GameStatus = styled.div`
   width: 100%;
   height: 30%;
   display: flex;
+  flex-wrap: wrap;
+`;
+
+export const Select = styled.select`
+  width: 8em;
+  height: 3em;
+  overflow: scroll;
+  border: none;
+`;
+
+export const Input = styled.input`
+  padding-left: 0.5em;
+  width: 12em;
+  height: 3em;
+  border: none;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5)
 `;

@@ -1,3 +1,4 @@
+//Create a class with the all card types and their values
 class Suite {
   constructor(props) {
     this.jack = { number: 1, value: 11 };
@@ -15,9 +16,10 @@ class Suite {
     this.ten = { number: 1, value: 1 };
   }
 }
-
+//Return a random number based on size of a given array
 const pickAtRandom = array => Math.floor(Math.random() * array.length);
-
+// Use above class to create a deck object containing 52 cards in their
+// respective suites
 export const Deck = {
   spades: new Suite('spades'),
   hearts: new Suite('diamonds'),
@@ -25,17 +27,19 @@ export const Deck = {
   diamonds: new Suite('diamonds'),
 };
 export const replay = [];
-export const hand = [];
 
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
 
 export const dealCards = (deck, noOfCards, hand, players) => {
-  if (players * noOfCards > 52) return new Error('There won\'t be enough cards for everybody 🙇');
-  //TODO refactor as these are recreated each time
+  if (players * noOfCards > 52) {
+    return new Error("There won't be enough cards for everybody 🙇");
+  }
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
   replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
+  //Check the deck for a random card in a suite if present remove it otherwise
+  //the function calls itself and searches for a card that is still available
   deck[chosenSuite][chosenKey] !== 0
     ? (deck[chosenSuite][chosenKey].number = 0)
     : dealCards(deck);
@@ -49,9 +53,12 @@ export const dealCards = (deck, noOfCards, hand, players) => {
   };
 };
 
+//Sum elements of an array
 const sum = arr => arr.reduce((current, next) => current + next);
 
-export const determineWinner = (array, objArray) =>
+const determineWinner = (array, objArray) =>
+  //check if there are any duplicate scores if so return a tie, else compare
+  //the max score with the player name and return the winning player name
   array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
     ? 'Tie'
     : objArray.reduce(
@@ -62,6 +69,7 @@ export const determineWinner = (array, objArray) =>
 export const calculateScore = (hand, players) => {
   const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
+  //All scores returns a 2d array of all the scores
   const allScores = hand
     .map(
       (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)
@@ -69,6 +77,7 @@ export const calculateScore = (hand, players) => {
     .filter(hands => hands);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
   const numericalScores = cardValues.map(sum);
+  //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({
     ['player']: `Player ${i + 1}`,
     score,

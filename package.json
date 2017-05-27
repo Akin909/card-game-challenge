@@ -6,7 +6,19 @@
   "author": "Akin Sowemimo",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "webpack-dev-server",
+    "test": "jest --watch"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "Game": "<rootDir>/components/Game.jsx",
+      "GameLogic": "<rootDir>/components/GameLogic.js",
+      "Card": "<rootDir>/components/Card.jsx"
+    }
   },
   "dependencies": {
     "babel-cli": "^6.24.1",
@@ -24,6 +36,10 @@
     "webpack-dev-server": "^2.4.5"
   },
   "devDependencies": {
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-jest": "^20.0.3",
+    "babel-preset-stage-0": "^6.24.1",
+    "enzyme": "^2.8.2",
+    "jest": "^20.0.4",
+    "react-addons-test-utils": "^15.5.1"
   }
 }

@@ -7,6 +7,12 @@ const htmlWebPackPluginConfig = new htmlWebPackPlugin({
   inject: 'body',
 });
 
+  //resolve: {
+    //alias: {
+      //Game: 'src/components/Game.jsx',
+      //GameLogic: 'src/components/GameLogic.js',
+    //},
+  //},
 module.exports = {
   //babel-polyfill allows use of features such as generators and async and
   //await
@@ -29,6 +35,8 @@ module.exports = {
         exclude: /node_modules/,
         query: { presets: ['stage-0'] },
       },
+      { loader: 'url-loader', test: /\\.gif$/ },
+      { loader: 'file-loader', test: /\\.(ttf|eot|svg)$/ },
     ],
   },
   plugins: [htmlWebPackPluginConfig],
