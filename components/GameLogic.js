@@ -16,8 +16,6 @@ class Suite {
     this.ten = { number: 1, value: 1 };
   }
 }
-//Return a random number based on size of a given array
-export const pickAtRandom = array => Math.floor(Math.random() * array.length);
 // Use above class to create a deck object containing 52 cards in their
 // respective suites
 export const Deck = {
@@ -27,6 +25,8 @@ export const Deck = {
   diamonds: new Suite('diamonds'),
 };
 export const replay = [];
+//Return a random number based on size of a given array
+export const pickAtRandom = array => Math.floor(Math.random() * array.length);
 
 const cardTypes = Object.keys(Deck.spades);
 const suiteTypes = Object.keys(Deck);
@@ -40,14 +40,13 @@ export const dealCards = (deck, noOfCards, hand, players) => {
   replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
   //Check the deck for a random card in a suite if present remove it otherwise
   //the function calls itself and searches for a card that is still available
-  deck[chosenSuite][chosenKey] !== 0
-    ? (deck[chosenSuite][chosenKey].number = 0)
-    : dealCards(deck);
+  const selectedCard = deck[chosenSuite][chosenKey];
+  selectedCard !== 0 ? (selectedCard.number = 0) : dealCards(deck);
   hand.push({
     description: `${chosenKey} of ${chosenSuite}`,
     suite: chosenSuite,
     chosenKey,
-    value: deck[chosenSuite][chosenKey].value,
+    value: selectedCard.value,
   });
   return {
     deck,
@@ -95,12 +94,10 @@ export function chunkAnArray(array, chunkSize) {
     .filter(element => element);
 }
 export const calculateScore = (hand, players) => {
-  const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
   //All scores returns a 2d array of each players hand
   const allScores = chunkAnArray(hand, chunkSize);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
-  const sorted = sortScores(allScores, sortObj);
   const numericalScores = cardValues.map(sum);
   //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({
@@ -112,6 +109,6 @@ export const calculateScore = (hand, players) => {
   return {
     eachScore,
     winner,
-    sorted,
+    sorted: sortScores(allScores, sortObj),
   };
 };
