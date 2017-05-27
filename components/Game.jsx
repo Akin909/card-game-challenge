@@ -13,11 +13,11 @@ import {
   Input,
 } from './Styled.jsx';
 import Card from './Card.jsx';
-//TODO outstanding bugs - 2players and 3 cards results in [Object object] wins
+
 class Game extends Component {
   state = {
     input: '',
-    select: '',
+    select: '2', //Must default to 2 or undefined is passed to logic function
     cards: logic.Deck,
     lastGame: {},
     scores: {},
@@ -41,7 +41,7 @@ class Game extends Component {
       });
     }
     //This returns an array of objects which represents the deck at each point in the shuffle
-    const newDeck = Array.from({ length: noOfCards * (players || 2) }, () =>
+    const newDeck = Array.from({ length: noOfCards * players }, () =>
       logic.dealCards(cards, noOfCards, hand, players)
     );
     //If players to cards ration is invalid an error will be returned
@@ -83,6 +83,7 @@ class Game extends Component {
             onChange={this.handleChange}
           />
           <Select
+            size={5}
             id="players"
             name="select"
             value={this.state.select}

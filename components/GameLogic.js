@@ -17,7 +17,7 @@ class Suite {
   }
 }
 //Return a random number based on size of a given array
-const pickAtRandom = array => Math.floor(Math.random() * array.length);
+export const pickAtRandom = array => Math.floor(Math.random() * array.length);
 // Use above class to create a deck object containing 52 cards in their
 // respective suites
 export const Deck = {
@@ -33,7 +33,7 @@ const suiteTypes = Object.keys(Deck);
 
 export const dealCards = (deck, noOfCards, hand, players) => {
   if (players * noOfCards > 52) {
-    return new Error("There won't be enough cards for everybody 🙇");
+    return new Error("There won't be enough cards for everybody 🙇🏾");
   }
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
@@ -45,6 +45,8 @@ export const dealCards = (deck, noOfCards, hand, players) => {
     : dealCards(deck);
   hand.push({
     description: `${chosenKey} of ${chosenSuite}`,
+    suite: chosenSuite,
+    key: chosenKey,
     value: deck[chosenSuite][chosenKey].value,
   });
   return {
@@ -54,9 +56,24 @@ export const dealCards = (deck, noOfCards, hand, players) => {
 };
 
 //Sum elements of an array
-const sum = arr => arr.reduce((current, next) => current + next);
+export const sum = arr => arr.reduce((current, next) => current + next);
 
-const determineWinner = (array, objArray) =>
+const sort = ['hearts', 'spades', 'diamonds', 'clubs'];
+const sortObj = {};
+const defaultValue = Infinity;
+sort.forEach((suite, i) => (sortObj[suite] = i + 1));
+export const sortScores = arr =>
+  arr.map(eachArr => {
+    return eachArr.sort((card, nextCard) => {
+      //console.log('sortObj', sortObj);
+      return (
+        (sortObj[card.suite] || defaultValue) -
+        (sortObj[nextCard.suite] || defaultValue)
+      );
+    });
+  });
+
+export const determineWinner = (array, objArray) =>
   //check if there are any duplicate scores if so return a tie, else compare
   //the max score with the player name and return the winning player name
   array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
@@ -69,13 +86,15 @@ const determineWinner = (array, objArray) =>
 export const calculateScore = (hand, players) => {
   const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
-  //All scores returns a 2d array of all the scores
+  //All scores returns a 2d array of each players hand
   const allScores = hand
     .map(
       (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)
     )
     .filter(hands => hands);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
+  console.log('allScores', allScores);
+  console.log('sorted', sortScores(allScores));
   const numericalScores = cardValues.map(sum);
   //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({

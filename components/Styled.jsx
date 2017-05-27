@@ -63,8 +63,9 @@ export const GameStatus = styled.div`
 `;
 
 export const Select = styled.select`
-  width: 8em;
-  height: 3em;
+  width: 10em;
+  height: 5em;
+  padding: 0.3em;
   overflow: scroll;
   border: none;
 `;
