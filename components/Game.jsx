@@ -89,7 +89,7 @@ class Game extends Component {
             value={this.state.select}
             onChange={this.handleChange}
           >
-            {Array.from({ length: 51 }, (option, index) => (
+            {Array.from({ length: 25 }, (option, index) => (
               <option
                 value={index + 2}
                 key={uuid()}
@@ -99,14 +99,12 @@ class Game extends Component {
           <button onClick={this.handleClick}>Deal a Hand</button>
         </Intro>
         <GameStatus>
-          {scores.allScores &&
-            scores.allScores.map((player, index) => (
+          {scores.sorted &&
+            scores.sorted.map((player, index) => (
               <CardContainer key={uuid()}>
                 <h3
                 >{`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}</h3>
-                {player.map(card => (
-                  <Card key={uuid()} description={card.description} />
-                ))}
+                {player.map(card => <Card key={uuid()} {...card} />)}
               </CardContainer>
             ))}
         </GameStatus>

@@ -46,7 +46,7 @@ export const dealCards = (deck, noOfCards, hand, players) => {
   hand.push({
     description: `${chosenKey} of ${chosenSuite}`,
     suite: chosenSuite,
-    key: chosenKey,
+    chosenKey,
     value: deck[chosenSuite][chosenKey].value,
   });
   return {
@@ -62,16 +62,16 @@ const sort = ['hearts', 'spades', 'diamonds', 'clubs'];
 const sortObj = {};
 const defaultValue = Infinity;
 sort.forEach((suite, i) => (sortObj[suite] = i + 1));
+//Phew was a toughie, arrange cards using a sorting object which stores their
+//priorities and checks them in the sort
 export const sortScores = arr =>
-  arr.map(eachArr => {
-    return eachArr.sort((card, nextCard) => {
-      //console.log('sortObj', sortObj);
-      return (
+  arr.map(eachArr =>
+    eachArr.sort(
+      (card, nextCard) =>
         (sortObj[card.suite] || defaultValue) -
         (sortObj[nextCard.suite] || defaultValue)
-      );
-    });
-  });
+    )
+  );
 
 export const determineWinner = (array, objArray) =>
   //check if there are any duplicate scores if so return a tie, else compare
@@ -93,8 +93,7 @@ export const calculateScore = (hand, players) => {
     )
     .filter(hands => hands);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
-  console.log('allScores', allScores);
-  console.log('sorted', sortScores(allScores));
+  const sorted = sortScores(allScores);
   const numericalScores = cardValues.map(sum);
   //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({
@@ -106,6 +105,6 @@ export const calculateScore = (hand, players) => {
   return {
     eachScore,
     winner,
-    allScores,
+    sorted,
   };
 };
