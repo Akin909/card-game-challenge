@@ -42,7 +42,7 @@ const Card = ({ chosenKey, suite, description }) => {
   return (
     <Cards bg={cardImgId}>
       <CardImg
-        src={`./components/assets/card-svgs/cards-png-300px/${cardImgId + '.png'}`}
+        src={`./components/assets/cards/${cardImgId + '.png'}`}
         alt={description}
       />
     </Cards>

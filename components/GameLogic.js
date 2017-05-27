@@ -29,12 +29,12 @@ export const Deck = {
 };
 export const replay = [];
 
-//Return a random number based on size of a given array
-export const pickAtRandom = array => Math.floor(Math.random() * array.length);
-
 //===========================================================
 // Helper functions
 //===========================================================
+//Return a random number based on size of a given array
+export const pickAtRandom = array => Math.floor(Math.random() * array.length);
+
 //Sum elements of an array
 export const sum = arr => arr.reduce((current, next) => current + next);
 
@@ -67,6 +67,7 @@ export const determineWinner = (array, objArray) =>
           value.score === Math.max(...array) ? value.player : nextVal.player
       );
 
+//Returns a chunked array based on a given size, it is used to create an array of subarrays which are each players hand
 export function chunkAnArray(array, chunkSize) {
   return array
     .map((element, index) => {
@@ -114,7 +115,6 @@ export const dealCards = (deck, noOfCards, hand, players) => {
 };
 export const calculateScore = (hand, players) => {
   const chunkSize = hand.length / players;
-  //All scores returns a 2d array of each players hand
   const allScores = chunkAnArray(hand, chunkSize);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
   const numericalScores = cardValues.map(sum);
