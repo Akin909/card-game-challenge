@@ -73,8 +73,8 @@ export const sortScores = (arr, sortObj) =>
     )
   );
 
-export function checkDuplicates(array){
- return  array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
+export function checkDuplicates(array) {
+  return array.every(el => array.indexOf(el) !== array.lastIndexOf(el));
 }
 export const determineWinner = (array, objArray) =>
   //check if there are any duplicate scores if so return a tie, else compare
@@ -85,16 +85,20 @@ export const determineWinner = (array, objArray) =>
         (value, nextVal) =>
           value.score === Math.max(...array) ? value.player : nextVal.player
       );
-
+export function chunkAnArray(array, chunkSize) {
+  return array
+    .map((element, index) => {
+      return index % chunkSize === 0
+        ? array.slice(index, index + chunkSize)
+        : null;
+    })
+    .filter(element => element);
+}
 export const calculateScore = (hand, players) => {
   const totalScore = hand.reduce((sum, card) => sum + card.value, 0);
   const chunkSize = hand.length / players;
   //All scores returns a 2d array of each players hand
-  const allScores = hand
-    .map(
-      (hands, i) => (i % chunkSize === 0 ? hand.slice(i, i + chunkSize) : null)
-    )
-    .filter(hands => hands);
+  const allScores = chunkAnArray(hand, chunkSize);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
   const sorted = sortScores(allScores, sortObj);
   const numericalScores = cardValues.map(sum);
