@@ -44,7 +44,7 @@ class Game extends Component {
     const newDeck = Array.from({ length: noOfCards * players }, () =>
       logic.dealCards(cards, noOfCards, hand, players)
     );
-    //If players to cards ration is invalid an error will be returned
+    //If players to cards ratio is invalid an error will be returned
     if (newDeck[0] instanceof Error) {
       return this.setState({
         error: newDeck[0].message,
