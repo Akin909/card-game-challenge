@@ -64,7 +64,7 @@ const defaultValue = Infinity;
 sort.forEach((suite, i) => (sortObj[suite] = i + 1));
 //Phew was a toughie, arrange cards using a sorting object which stores their
 //priorities and checks them in the sort
-export const sortScores = arr =>
+export const sortScores = (arr, sortObj) =>
   arr.map(eachArr =>
     eachArr.sort(
       (card, nextCard) =>
@@ -73,10 +73,13 @@ export const sortScores = arr =>
     )
   );
 
+export function checkDuplicates(array){
+ return  array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
+}
 export const determineWinner = (array, objArray) =>
   //check if there are any duplicate scores if so return a tie, else compare
   //the max score with the player name and return the winning player name
-  array.every(el => array.indexOf(el) !== array.lastIndexOf(el))
+  checkDuplicates(array)
     ? 'Tie'
     : objArray.reduce(
         (value, nextVal) =>
@@ -93,7 +96,7 @@ export const calculateScore = (hand, players) => {
     )
     .filter(hands => hands);
   const cardValues = allScores.map(arr => arr.map(card => card.value));
-  const sorted = sortScores(allScores);
+  const sorted = sortScores(allScores, sortObj);
   const numericalScores = cardValues.map(sum);
   //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({

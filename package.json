@@ -7,17 +7,11 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "test": "jest --watch"
+    "test": "jest --watch --no-cache"
   },
   "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
     "moduleNameMapper": {
-      "Game": "<rootDir>/components/Game.jsx",
-      "GameLogic": "<rootDir>/components/GameLogic.js",
-      "Card": "<rootDir>/components/Card.jsx"
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/mocks/fileMock.js"
     }
   },
   "dependencies": {
