@@ -15,23 +15,21 @@ describe('Test Game Logic', () => {
   });
 
   it('sorts an array of arrays by specified priority', () => {
-    const sortObj = {
-      high: 1,
-      medium: 2,
-      low: 3,
-    };
+    const sort = ['high', 'middle', 'low'];
     const twoDArray = [
       [{ test: 'medium' }, { test: 'high' }],
       [{ test: 'low' }, { test: 'high' }],
     ];
-    const actual = logic.sortScores(twoDArray, sortObj);
+    const actual = logic.sortScores(twoDArray, sort);
     console.log('actual', actual);
     //expect(twoDArray)
   });
-  it('Checks if there are duplicates in an array', () => {
-    const actual = logic.checkDuplicates(testArr);
-    const nextActual = logic.checkDuplicates(testArr2);
+  it('returns true if there are no duplicates', () => {
+    const actual = logic.isUnique(testArr);
+    expect(actual).toBe(true);
+  });
+  it('returns false if there are duplicates', () => {
+    const actual = logic.isUnique(testArr2);
     expect(actual).toBe(false);
-    expect(nextActual).toBe(true);
   });
 });
