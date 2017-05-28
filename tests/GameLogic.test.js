@@ -15,7 +15,7 @@ describe('Test Game Logic', () => {
   });
 
   it('sorts an array of arrays by specified priority', () => {
-    const sort = ['high', 'middle', 'low'];
+    const sort = ['high', 'medium', 'low'];
     const twoDArray = [
       [{ test: 'medium' }, { test: 'high' }],
       [{ test: 'low' }, { test: 'high' }],
@@ -32,4 +32,6 @@ describe('Test Game Logic', () => {
     const actual = logic.isUnique(testArr2);
     expect(actual).toBe(false);
   });
+
+  it('return true if the suite and card are the same', () => {});
 });

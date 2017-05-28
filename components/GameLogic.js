@@ -76,7 +76,15 @@ export const chunkAnArray = (array, chunkSize) =>
         index % chunkSize === 0 ? array.slice(index, index + chunkSize) : null
     )
     .filter(element => element);
-
+const findPairs = array => {
+  return array.map(subarray =>
+    subarray.reduce((card, nextCard) => {
+      return (
+        card.chosenKey === nextCard.chosenKey || card.suite === nextCard.suite
+      );
+    })
+  );
+};
 //=======================================================
 // Card Game Core Logic
 //=======================================================
@@ -122,6 +130,8 @@ export const calculateScore = (hand, players) => {
     player: `Player ${i + 1}`,
     score,
   }));
+
+  console.log('pairs', findPairs(sortScores(allScores, sort)));
 
   return {
     eachScore,

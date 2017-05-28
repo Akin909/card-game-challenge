@@ -11,6 +11,7 @@ import {
   Replay,
   Select,
   Input,
+  Transition,
 } from './Styled.jsx';
 import Card from './Card.jsx';
 
@@ -99,14 +100,20 @@ class Game extends Component {
           <button onClick={this.handleClick}>Deal a Hand</button>
         </Intro>
         <GameStatus>
-          {scores.sorted &&
-            scores.sorted.map((player, index) => (
-              <CardContainer key={uuid()}>
-                <h3
-                >{`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}</h3>
-                {player.map(card => <Card key={uuid()} {...card} />)}
-              </CardContainer>
-            ))}
+          <Transition
+            transitionName="card"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={500}
+          >
+            {scores.sorted &&
+              scores.sorted.map((player, index) => (
+                <CardContainer key={uuid()}>
+                  <h3
+                  >{`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}</h3>
+                  {player.map(card => <Card key={uuid()} {...card} />)}
+                </CardContainer>
+              ))}
+          </Transition>
         </GameStatus>
         <div>
           <Replay>

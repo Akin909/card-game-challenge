@@ -15,6 +15,14 @@ injectGlobal`
   * {
     box-sizing: inherit
    }
+
+   .card-enter {
+    transform: translateX(-100%)
+   }
+   .card-enter.card-enter-active {
+    transform: translateX(0%);
+    transition: all 500ms ease;
+   }
 `;
 
 class App extends Component {

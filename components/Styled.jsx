@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup';
 
 export const CardContainer = styled.div`
   width: 100%;
@@ -76,4 +77,9 @@ export const Input = styled.input`
   height: 3em;
   border: none;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5)
+`;
+
+export const Transition = styled(CSSTransitionGroup)`
+  width: 100%;
+  height: 100%;
 `;
