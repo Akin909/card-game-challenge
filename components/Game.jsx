@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import uuid from "uuid";
+import React, { Component } from 'react';
+import uuid from 'uuid';
 
-import * as logic from "./GameLogic.js";
+import * as logic from './GameLogic.js';
 import {
   GameStatus,
   Players,
@@ -13,13 +13,13 @@ import {
   Input,
   Transition,
   PlayerScore
-} from "./Styled.jsx";
-import Card from "./Card.jsx";
+} from './Styled.jsx';
+import Card from './Card.jsx';
 
 class Game extends Component {
   state = {
-    input: "",
-    select: "2", //Must default to 2 or undefined is passed to logic function
+    input: '',
+    select: '2', //Must default to 2 or undefined is passed to logic function
     cards: logic.Deck,
     lastGame: {},
     scores: {},
@@ -27,19 +27,19 @@ class Game extends Component {
   };
 
   handleClick = event => {
-    this.setState({ error: "" });
+    this.setState({ error: '' });
     const { select, cards, hand, input } = this.state;
     //Check if the input is empty or input is not a number if so return an
     //error message
     if (input.length < 1 || isNaN(input)) {
-      return this.setState({ error: "You must input a number" });
+      return this.setState({ error: 'You must input a number' });
     }
     const noOfCards = Number(input);
     const players = Number(select);
     //Don't allow more cards to be dealt than are available
     if (noOfCards >= 26) {
       return this.setState({
-        error: "There are only 52 cards in a deck.. please enter a smaller number of cards to deal"
+        error: 'There are only 52 cards in a deck.. please enter a smaller number of cards to deal'
       });
     }
     //This returns an array of objects which represents the deck at each point in the shuffle
@@ -71,7 +71,7 @@ class Game extends Component {
       <div>
         <Score>
           {scores.winner &&
-            (scores.winner === "Tie"
+            (scores.winner === 'Tie'
               ? scores.winner
               : `${scores.winner} Wins!`)}
         </Score>

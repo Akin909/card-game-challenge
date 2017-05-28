@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount, shallow } from 'enzyme';
 import Game from './../components/Game.jsx';
+import { Input } from './../components/Styled.jsx';
 
 describe('Game', () => {
-  it('renders without crashing', () => {
-    mount(<Game />);
+  let component, input;
+  beforeEach(() => {
+    component = shallow(<Game />);
+    input = component.find('input');
+    console.log('input', input);
   });
 
-  //describe('render', () => {
-    //it('contains expected elements', () => {
-      //const game = shallow(<Game />);
-      //const input = <div className="game-div" />;
-      //expect(game.contains(input)).toEqual(true);
-    //});
-  //});
+  it('input should have correct props', () => {
+    expect(component.find(input).props().value.length).toEqual(0);
+  });
 });

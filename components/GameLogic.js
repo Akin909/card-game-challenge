@@ -25,7 +25,7 @@ export const Deck = {
   spades: new Suite('spades'),
   hearts: new Suite('diamonds'),
   clubs: new Suite('clubs'),
-  diamonds: new Suite('diamonds'),
+  diamonds: new Suite('diamonds')
 };
 export const replay = [];
 
@@ -77,17 +77,29 @@ export const chunkAnArray = (array, chunkSize) =>
     )
     .filter(element => element);
 
-const findPairs = (array, prop) =>
+const findPairs = (array, props) =>
   array.map(subarray => {
-    let seen = new Set();
-    return subarray.some(card => {
-    if (seen.size === seen.add(card.chosenKey).size) {
-    return card;
-    }
-    return null;
-    //|| seen.size === seen.add(card.suite)
+    const lookup = {};
+    cardTypes.forEach(type => (lookup[type] = 0));
+    subarray.forEach(card => {
+      lookup[card[props]]++;
     });
+    for (let key in lookup) {
+      switch (lookup[key]) {
+        case 2:
+          lookup.pairs = key;
+          break;
+        case 3:
+          lookup.three = key;
+          break;
+        case 4:
+          lookup.straight = key;
+          break;
+      }
+    }
+    return lookup;
   });
+
 //=======================================================
 // Card Game Core Logic
 //=======================================================
@@ -116,11 +128,11 @@ export const dealCards = (deck, noOfCards, hand, players) => {
     description: `${chosenKey} of ${chosenSuite}`,
     suite: chosenSuite,
     chosenKey,
-    value: selectedCard.value,
+    value: selectedCard.value
   });
   return {
     deck,
-    hand,
+    hand
   };
 };
 export const calculateScore = (hand, players) => {
@@ -131,14 +143,14 @@ export const calculateScore = (hand, players) => {
   //Matches the scores to the players
   const eachScore = numericalScores.map((score, i) => ({
     player: `Player ${i + 1}`,
-    score,
+    score
   }));
-
-  console.log('pairs', findPairs(sortScores(allScores, sort)));
+  const pairs = findPairs(sortScores(allScores, sort), 'chosenKey');
+  console.log('pairs', pairs);
 
   return {
     eachScore,
     winner: determineWinner(numericalScores, eachScore),
-    sorted: sortScores(allScores, sort),
+    sorted: sortScores(allScores, sort)
   };
 };

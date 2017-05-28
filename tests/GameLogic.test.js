@@ -18,7 +18,7 @@ describe('Test Game Logic', () => {
     const sort = ['high', 'medium', 'low'];
     const twoDArray = [
       [{ test: 'medium' }, { test: 'high' }],
-      [{ test: 'low' }, { test: 'high' }],
+      [{ test: 'low' }, { test: 'high' }]
     ];
     const actual = logic.sortScores(twoDArray, sort);
     console.log('actual', actual);
@@ -31,6 +31,11 @@ describe('Test Game Logic', () => {
   it('returns false if there are duplicates', () => {
     const actual = logic.isUnique(testArr2);
     expect(actual).toBe(false);
+  });
+  it('return an error if number of player an cards are too high', () => {
+    const actual = logic.dealCards({ test: 'test stuff' }, 400, [], 40);
+    const errorMessage = `There won't be enough cards for everybody 🙇🏾`;
+    expect(actual.message).toBe(errorMessage);
   });
 
   it('return true if the suite and card are the same', () => {});

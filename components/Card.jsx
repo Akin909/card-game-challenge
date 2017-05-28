@@ -34,7 +34,7 @@ const numbers = {
   ten: '10',
   jack: 'J',
   king: 'K',
-  queen: 'Q',
+  queen: 'Q'
 };
 
 const Card = ({ chosenKey, suite, description }) => {
@@ -51,6 +51,6 @@ const Card = ({ chosenKey, suite, description }) => {
 Card.propTypes = {
   description: PropTypes.string,
   chosenKey: PropTypes.string,
-  suite: PropTypes.string,
+  suite: PropTypes.string
 };
 export default Card;
