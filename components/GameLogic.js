@@ -76,15 +76,18 @@ export const chunkAnArray = (array, chunkSize) =>
         index % chunkSize === 0 ? array.slice(index, index + chunkSize) : null
     )
     .filter(element => element);
-const findPairs = array => {
-  return array.map(subarray =>
-    subarray.reduce((card, nextCard) => {
-      return (
-        card.chosenKey === nextCard.chosenKey || card.suite === nextCard.suite
-      );
-    })
-  );
-};
+
+const findPairs = (array, prop) =>
+  array.map(subarray => {
+    let seen = new Set();
+    return subarray.some(card => {
+    if (seen.size === seen.add(card.chosenKey).size) {
+    return card;
+    }
+    return null;
+    //|| seen.size === seen.add(card.suite)
+    });
+  });
 //=======================================================
 // Card Game Core Logic
 //=======================================================

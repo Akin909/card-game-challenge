@@ -12,6 +12,7 @@ import {
   Select,
   Input,
   Transition,
+  PlayerScore,
 } from './Styled.jsx';
 import Card from './Card.jsx';
 
@@ -108,8 +109,9 @@ class Game extends Component {
             {scores.sorted &&
               scores.sorted.map((player, index) => (
                 <CardContainer key={uuid()}>
-                  <h3
-                  >{`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}</h3>
+                <PlayerScore>
+                  {`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}
+                </PlayerScore>
                   {player.map(card => <Card key={uuid()} {...card} />)}
                 </CardContainer>
               ))}

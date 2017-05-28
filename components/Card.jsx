@@ -40,7 +40,7 @@ const numbers = {
 const Card = ({ chosenKey, suite, description }) => {
   const cardImgId = numbers[chosenKey] + suite.charAt(0).toUpperCase();
   return (
-    <Cards bg={cardImgId}>
+    <Cards>
       <CardImg
         src={`./../assets/cards/${cardImgId + '.png'}`}
         alt={description}

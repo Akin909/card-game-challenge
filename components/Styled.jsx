@@ -79,3 +79,9 @@ export const Transition = styled(CSSTransitionGroup)`
   width: 100%;
   height: 100%;
 `;
+
+export const PlayerScore = styled.h3`
+  width: 100%;
+  color: white;
+  text-align: center;
+`;
