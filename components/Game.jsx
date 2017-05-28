@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import uuid from 'uuid';
+import React, { Component } from "react";
+import uuid from "uuid";
 
-import * as logic from './GameLogic.js';
+import * as logic from "./GameLogic.js";
 import {
   GameStatus,
   Players,
@@ -12,34 +12,34 @@ import {
   Select,
   Input,
   Transition,
-  PlayerScore,
-} from './Styled.jsx';
-import Card from './Card.jsx';
+  PlayerScore
+} from "./Styled.jsx";
+import Card from "./Card.jsx";
 
 class Game extends Component {
   state = {
-    input: '',
-    select: '2', //Must default to 2 or undefined is passed to logic function
+    input: "",
+    select: "2", //Must default to 2 or undefined is passed to logic function
     cards: logic.Deck,
     lastGame: {},
     scores: {},
-    hand: [],
+    hand: []
   };
 
   handleClick = event => {
-    this.setState({ error: '' });
+    this.setState({ error: "" });
     const { select, cards, hand, input } = this.state;
     //Check if the input is empty or input is not a number if so return an
     //error message
     if (input.length < 1 || isNaN(input)) {
-      return this.setState({ error: 'You must input a number' });
+      return this.setState({ error: "You must input a number" });
     }
     const noOfCards = Number(input);
     const players = Number(select);
     //Don't allow more cards to be dealt than are available
     if (noOfCards >= 26) {
       return this.setState({
-        error: 'There are only 52 cards in a deck.. please enter a smaller number of cards to deal',
+        error: "There are only 52 cards in a deck.. please enter a smaller number of cards to deal"
       });
     }
     //This returns an array of objects which represents the deck at each point in the shuffle
@@ -49,7 +49,7 @@ class Game extends Component {
     //If players to cards ratio is invalid an error will be returned
     if (newDeck[0] instanceof Error) {
       return this.setState({
-        error: newDeck[0].message,
+        error: newDeck[0].message
       });
     }
     //Set state to the deck at the end of the shuffle, also reset the current
@@ -58,7 +58,7 @@ class Game extends Component {
     this.setState({
       lastGame: currentDeck,
       scores: logic.calculateScore(currentDeck[0].hand, players),
-      hand: [],
+      hand: []
     });
   };
 
@@ -71,7 +71,7 @@ class Game extends Component {
       <div>
         <Score>
           {scores.winner &&
-            (scores.winner === 'Tie'
+            (scores.winner === "Tie"
               ? scores.winner
               : `${scores.winner} Wins!`)}
         </Score>
@@ -109,9 +109,9 @@ class Game extends Component {
             {scores.sorted &&
               scores.sorted.map((player, index) => (
                 <CardContainer key={uuid()}>
-                <PlayerScore>
-                  {`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}
-                </PlayerScore>
+                  <PlayerScore>
+                    {`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}
+                  </PlayerScore>
                   {player.map(card => <Card key={uuid()} {...card} />)}
                 </CardContainer>
               ))}

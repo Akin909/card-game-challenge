@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Game component renders correctly renders correctly 1`] = `
+<div>
+  <h2
+    className="jUyNoj"
+  />
+  <section
+    className="ebfgaU"
+  >
+    <input
+      className="anDgO"
+      name="input"
+      onChange={[Function]}
+      placeholder="Number of hands"
+      type="text"
+      value={undefined}
+    />
+    <select
+      className="hMHZdq"
+      id="players"
+      name="select"
+      onChange={[Function]}
+      size={5}
+      value="2"
+    >
+      <option
+        value={2}
+      >
+        2 player(s)
+      </option>
+      <option
+        value={3}
+      >
+        3 player(s)
+      </option>
+      <option
+        value={4}
+      >
+        4 player(s)
+      </option>
+      <option
+        value={5}
+      >
+        5 player(s)
+      </option>
+      <option
+        value={6}
+      >
+        6 player(s)
+      </option>
+      <option
+        value={7}
+      >
+        7 player(s)
+      </option>
+      <option
+        value={8}
+      >
+        8 player(s)
+      </option>
+      <option
+        value={9}
+      >
+        9 player(s)
+      </option>
+      <option
+        value={10}
+      >
+        10 player(s)
+      </option>
+      <option
+        value={11}
+      >
+        11 player(s)
+      </option>
+      <option
+        value={12}
+      >
+        12 player(s)
+      </option>
+      <option
+        value={13}
+      >
+        13 player(s)
+      </option>
+      <option
+        value={14}
+      >
+        14 player(s)
+      </option>
+      <option
+        value={15}
+      >
+        15 player(s)
+      </option>
+      <option
+        value={16}
+      >
+        16 player(s)
+      </option>
+      <option
+        value={17}
+      >
+        17 player(s)
+      </option>
+      <option
+        value={18}
+      >
+        18 player(s)
+      </option>
+      <option
+        value={19}
+      >
+        19 player(s)
+      </option>
+      <option
+        value={20}
+      >
+        20 player(s)
+      </option>
+      <option
+        value={21}
+      >
+        21 player(s)
+      </option>
+      <option
+        value={22}
+      >
+        22 player(s)
+      </option>
+      <option
+        value={23}
+      >
+        23 player(s)
+      </option>
+      <option
+        value={24}
+      >
+        24 player(s)
+      </option>
+      <option
+        value={25}
+      >
+        25 player(s)
+      </option>
+      <option
+        value={26}
+      >
+        26 player(s)
+      </option>
+    </select>
+    <button
+      onClick={[Function]}
+    >
+      Deal a Hand
+    </button>
+  </section>
+  <div
+    className="jvjBkq"
+  >
+    <span
+      className="hdKDHS"
+    />
+  </div>
+  <div>
+    <ul
+      className="dmhChW"
+    />
+  </div>
+</div>
+`;
