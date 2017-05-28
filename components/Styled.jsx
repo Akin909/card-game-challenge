@@ -19,11 +19,7 @@ export const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: Helvetica;
   overflow: scroll;
-  > * {
-    font-family: inherit;
-  }
 `;
 
 export const Intro = styled.section`

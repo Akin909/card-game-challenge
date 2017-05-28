@@ -2,18 +2,23 @@ import React, { Component } from 'react';
 import Game from './Game.jsx';
 import { AppContainer, Title } from './Styled.jsx';
 import { injectGlobal } from 'styled-components';
+import font from './font.js';
 
 //eslint-disable-next-line
 injectGlobal`
+/* roboto-regular - latin */
+${font}
   html, body {
     width: 100%;
     height: 100%;
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
   }
   * {
-    box-sizing: inherit
+    box-sizing: inherit;
+    font-family: inherit;
    }
 
    .card-enter {

@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "test": "jest --watch --no-cache"
+    "test": "jest --watch --no-cache",
+    "coverage": "jest --coverage --watch"
   },
   "jest": {
     "moduleNameMapper": {
