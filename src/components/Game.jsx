@@ -69,8 +69,6 @@ class Game extends Component {
 
   render() {
     const { select, scores, cards, value, hand, error } = this.state;
-    const replay = logic.replay;
-    console.log('replay', replay);
     return (
       <div>
         <Rules />
@@ -108,7 +106,7 @@ class Game extends Component {
         <GameResults scores={scores} />
         <div>
           <Replay>
-            {replay.map(step => <li key={uuid()}>{step}</li>)}
+            {logic.replay.map(step => <li key={uuid()}>{step}</li>)}
           </Replay>
         </div>
       </div>
