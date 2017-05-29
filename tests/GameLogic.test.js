@@ -17,6 +17,7 @@ describe('Test Game Logic', () => {
   });
 
   it('sorts an array of arrays by specified priority', () => {
+    //TODO figure out why this test fails
     const sort = ['high', 'medium', 'low'];
     const twoDArray = [
       [{ test: 'medium' }, { test: 'high' }],
@@ -44,7 +45,6 @@ describe('Test Game Logic', () => {
     expect(actual.message).toBe(errorMessage);
   });
   it('should return the highest score', () => {
-
     const actual = logic.highestScore(
       [{ score: 10, player: 'john' }, { score: 20, player: 'jane' }],
       20
@@ -60,5 +60,34 @@ describe('Test Game Logic', () => {
     });
   });
 
-  it('return true if the suite and card are the same', () => {});
+  it('returns the correct winner', () => {
+    const actual = logic.determineWinner(
+      [20, 10],
+      [{ score: 10, player: 'john' }, { score: 20, player: 'jane' }]
+    );
+    expect(actual).toBe('jane');
+  });
+
+  it('returns a tie', () => {
+    const actual = logic.determineWinner(
+      [10, 10],
+      [{ score: 10, player: 'john' }, { score: 10, player: 'jane' }]
+    );
+    expect(actual).toBe('Tie');
+  });
+
+  it('updates the scores', () => {
+    const actual = logic.updateScore(
+      [
+        { score: 10, player: 'john', message: 'john' },
+        { score: 10, player: 'jane', message: 'jane' }
+      ],
+      { john: { pairs: '' }, jane: {} }
+    );
+    actual.forEach(name => {
+      if (name.player === 'john') {
+        expect(name.score).toBe(20);
+      }
+    });
+  });
 });

@@ -119,8 +119,8 @@ const specialScore = (array, props, scores, criteria) =>
     return lookup;
   }, {});
 
-const updateScore = (score, specialTally) => {
-  return score.map(each => {
+export const updateScore = (score, specialTally) =>
+  score.map(each => {
     let player = specialTally[each.player];
     if (player.hasOwnProperty('pairs')) {
       return {
@@ -140,7 +140,6 @@ const updateScore = (score, specialTally) => {
     }
     return each;
   });
-};
 //=======================================================
 // Card Game Core Logic
 //=======================================================
