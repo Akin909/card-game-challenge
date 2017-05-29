@@ -77,29 +77,46 @@ export const chunkAnArray = (array, chunkSize) =>
     )
     .filter(element => element);
 
-const findPairs = (array, props) =>
-  array.map(subarray => {
-    const lookup = {};
-    cardTypes.forEach(type => (lookup[type] = 0));
+//A beast.. checks the array of hands if a card type appears more than once
+//a count increases for that card;
+const specialScore = (array, props, scores) => {
+  const lookup = {};
+  array.forEach((subarray, index) => {
+    let player = 'Player ' + (index + 1);
+    lookup[player] = {};
+    cardTypes.forEach(type => (lookup[player][type] = 0));
     subarray.forEach(card => {
-      lookup[card[props]]++;
+      lookup[player][card[props]]++;
     });
-    for (let key in lookup) {
-      switch (lookup[key]) {
+    for (let key in lookup[player]) {
+      switch (lookup[player][key]) {
         case 2:
-          lookup.pairs = key;
+          lookup[player].pairs = key;
           break;
         case 3:
-          lookup.three = key;
+          lookup[player].three = key;
           break;
         case 4:
-          lookup.straight = key;
+          lookup[player].straight = key;
           break;
       }
     }
-    return lookup;
   });
+  return lookup;
+};
 
+const updateScore = (score, specialTally) => {
+  return score.map(each => {
+    if (specialTally[each.player].hasOwnProperty('pairs')) {
+      each.score += 10;
+    } else if (specialTally[each.player].hasOwnProperty('three')) {
+      each.score += 20;
+    } else if (specialTally[each.player].hasOwnProperty('straight')) {
+      each.score += 40;
+    }
+    return each;
+  });
+};
 //=======================================================
 // Card Game Core Logic
 //=======================================================
@@ -145,12 +162,13 @@ export const calculateScore = (hand, players) => {
     player: `Player ${i + 1}`,
     score
   }));
-  const pairs = findPairs(sortScores(allScores, sort), 'chosenKey');
-  console.log('pairs', pairs);
-
+  const sorted = sortScores(allScores, sort);
+  const pairs = specialScore(sorted, 'chosenKey', eachScore);
+  const updated = updateScore(eachScore, pairs);
+  console.log('updated', updated);
   return {
-    eachScore,
+    eachScore, //updated,
     winner: determineWinner(numericalScores, eachScore),
-    sorted: sortScores(allScores, sort)
+    sorted
   };
 };
