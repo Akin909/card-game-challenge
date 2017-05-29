@@ -9,7 +9,6 @@ describe('Game', () => {
   beforeEach(() => {
     component = shallow(<Game />);
     input = component.find('input');
-    console.log('input', input);
   });
 
   it('input should have correct props', () => {

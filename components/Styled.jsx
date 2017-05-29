@@ -38,8 +38,9 @@ export const Title = styled.h1`
 `;
 
 export const Replay = styled.ul`
-  list-style-type: none;
   width: 100%;
+  height: 20em;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -73,6 +74,7 @@ export const Input = styled.input`
   height: 3em;
   border: none;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5)
+  text-align: center;
 `;
 
 export const Transition = styled(CSSTransitionGroup)`

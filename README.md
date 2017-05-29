@@ -1,5 +1,18 @@
 Coding Challenge: World’s Simplest Poker
 ===
+## Install instructions
+* `git clone` the repository to your machine.
+* Run `npm install` or `yarn install` to setup dependencies.
+* Run `yarn start` or `npm start` to start the development server
+* Run `yarn` or `npm test` to run the test suite :frowning:
+
+## Tech Stack
+* React
+* Styled Components
+* Vanilla JavaScript for Game Logic
+* Webpack and Babel
+* Jest for Testing
+
 ### The challenge
 
 Build a very simple card game, played between two or more players. Immediately after the

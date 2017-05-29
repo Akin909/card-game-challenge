@@ -1,7 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 
+const RulesContainer = styled.ul`
+  color: white;
+`;
 const Rules = props => (
-  <ul>
+  <RulesContainer>
     <h2>Rules</h2>
     <li>Each number card is worth one point.</li>
     <li>
@@ -19,7 +23,7 @@ const Rules = props => (
     <li>
       A Straight - all cards with the same value are worth 40 extra points
     </li>
-  </ul>
+  </RulesContainer>
 );
 
 export default Rules;
