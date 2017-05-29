@@ -3,11 +3,13 @@ import * as logic from './../components/GameLogic.js';
 describe('Test Game Logic', () => {
   const testArr = [1, 2, 3, 4, 5, 6];
   const testArr2 = [2, 2, 3, 4, 5, 6];
+
   it('return a random number less than the length of the given array', () => {
     const actual = logic.pickAtRandom(testArr);
     const expected = testArr.length;
     expect(actual).toBeLessThan(expected);
   });
+
   it('add elements of an array', () => {
     const actual = logic.sum(testArr);
     const expected = 21;
@@ -21,23 +23,28 @@ describe('Test Game Logic', () => {
       [{ test: 'low' }, { test: 'high' }]
     ];
     const actual = logic.sortScores(twoDArray, sort);
-    console.log('actual', actual);
-    //expect(twoDArray)
+    actual.forEach(array => {
+      expect(array[0].test).toEqual('high');
+    });
   });
+
   it('returns true if there are no duplicates', () => {
     const actual = logic.isUnique(testArr);
     expect(actual).toBe(true);
   });
+
   it('returns false if there are duplicates', () => {
     const actual = logic.isUnique(testArr2);
     expect(actual).toBe(false);
   });
+
   it('return an error if number of player an cards are too high', () => {
     const actual = logic.dealCards({ test: 'test stuff' }, 400, [], 40);
     const errorMessage = `There won't be enough cards for everybody 🙇🏾`;
     expect(actual.message).toBe(errorMessage);
   });
   it('should return the highest score', () => {
+
     const actual = logic.highestScore(
       [{ score: 10, player: 'john' }, { score: 20, player: 'jane' }],
       20
