@@ -162,7 +162,6 @@ export const dealCards = (deck, noOfCards, hand, players) => {
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
   const selectedCard = deck[chosenSuite][chosenKey];
-  let replay = [];
   replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
 
   selectedCard !== 0 ? (selectedCard.number = 0) : dealCards(deck);

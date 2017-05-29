@@ -39,13 +39,15 @@ export const Title = styled.h1`
 
 export const Replay = styled.ul`
   width: 100%;
-  height: 20em;
-  overflow: hidden;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0;
+  > li {
+    margin: 0.3rem 0;
+  }
 `;
 
 export const Score = styled.h2`

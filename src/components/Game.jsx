@@ -106,7 +106,8 @@ class Game extends Component {
         <GameResults scores={scores} />
         <div>
           <Replay>
-            {logic.replay.map(step => <li key={uuid()}>{step}</li>)}
+            <h2>Last 10 Cards Dealt </h2>
+            {logic.replay.map(step => <li key={uuid()}>{step}</li>).slice(-10)}
           </Replay>
         </div>
       </div>
