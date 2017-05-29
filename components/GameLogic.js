@@ -77,26 +77,36 @@ export const chunkAnArray = (array, chunkSize) =>
     )
     .filter(element => element);
 
+const createPlayerLookup = index => {
+  let playerString = 'Player ' + (index + 1);
+  const player = {};
+  cardTypes.forEach(type => (player[type] = 0));
+  return {
+    player,
+    playerString
+  };
+};
+
 //A beast.. checks the array of hands if a card type appears more than once
 //a count increases for that card;
 const specialScore = (array, props, scores) =>
   array.reduce((lookup, subarray, index) => {
-    let player = 'Player ' + (index + 1);
-    lookup[player] = {};
-    cardTypes.forEach(type => (lookup[player][type] = 0));
+    let { player, playerString } = createPlayerLookup(lookup, index);
+    lookup.player = player;
     subarray.forEach(card => {
-      lookup[player][card[props]]++;
+      //Count the cards by their types
+      lookup.player[card[props]]++;
     });
-    for (let key in lookup[player]) {
-      switch (lookup[player][key]) {
+    for (let key in lookup.player) {
+      switch (lookup.player[key]) {
         case 2:
-          lookup[player].pairs = key;
+          lookup.player.pairs = key;
           break;
         case 3:
-          lookup[player].threeOfAKind = key;
+          lookup.player.threeOfAKind = key;
           break;
         case 4:
-          lookup[player].straight = key;
+          lookup.player.straight = key;
           break;
       }
     }
