@@ -61,7 +61,7 @@ export const isUnique = array => array.length === new Set(array).size;
 export const determineWinner = (array, objArray) =>
   //check if there are any duplicate scores if so return a tie, else compare
   //the max score with the player name and return the winning player name
-  isUnique(array)
+  !isUnique(array)
     ? 'Tie'
     : objArray.reduce(
         (value, nextVal) =>
@@ -177,7 +177,7 @@ export const calculateScore = (hand, players) => {
   const updated = updateScore(eachScore, pairs);
   return {
     eachScore: updated,
-    winner: determineWinner(numericalScores, eachScore),
+    winner: determineWinner(numericalScores, updated),
     sorted
   };
 };
