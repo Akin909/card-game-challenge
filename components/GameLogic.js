@@ -79,9 +79,8 @@ export const chunkAnArray = (array, chunkSize) =>
 
 //A beast.. checks the array of hands if a card type appears more than once
 //a count increases for that card;
-const specialScore = (array, props, scores) => {
-  const lookup = {};
-  array.forEach((subarray, index) => {
+const specialScore = (array, props, scores) =>
+  array.reduce((lookup, subarray, index) => {
     let player = 'Player ' + (index + 1);
     lookup[player] = {};
     cardTypes.forEach(type => (lookup[player][type] = 0));
@@ -94,25 +93,36 @@ const specialScore = (array, props, scores) => {
           lookup[player].pairs = key;
           break;
         case 3:
-          lookup[player].three = key;
+          lookup[player].threeOfAKind = key;
           break;
         case 4:
           lookup[player].straight = key;
           break;
       }
     }
-  });
-  return lookup;
-};
+    return lookup;
+  }, {});
 
 const updateScore = (score, specialTally) => {
   return score.map(each => {
-    if (specialTally[each.player].hasOwnProperty('pairs')) {
-      each.score += 10;
-    } else if (specialTally[each.player].hasOwnProperty('three')) {
-      each.score += 20;
-    } else if (specialTally[each.player].hasOwnProperty('straight')) {
-      each.score += 40;
+    let player = specialTally[each.player];
+    console.log('player', player.hasOwnProperty('pairs'));
+    console.log('player', player);
+    if (player.hasOwnProperty('pairs')) {
+      return {
+        ...each,
+        score: each.score + 10
+      };
+    } else if (player.hasOwnProperty('threeOfAKind')) {
+      return {
+        ...each,
+        score: each.score + 20
+      };
+    } else if (player.hasOwnProperty('straight')) {
+      return {
+        ...each,
+        score: each.score + 40
+      };
     }
     return each;
   });
@@ -165,9 +175,8 @@ export const calculateScore = (hand, players) => {
   const sorted = sortScores(allScores, sort);
   const pairs = specialScore(sorted, 'chosenKey', eachScore);
   const updated = updateScore(eachScore, pairs);
-  console.log('updated', updated);
   return {
-    eachScore, //updated,
+    eachScore: updated,
     winner: determineWinner(numericalScores, eachScore),
     sorted
   };
