@@ -2,7 +2,9 @@
 
 exports[`Game component renders correctly renders correctly 1`] = `
 <div>
-  <ul>
+  <ul
+    className="kscWej"
+  >
     <h2>
       Rules
     </h2>
@@ -40,7 +42,7 @@ exports[`Game component renders correctly renders correctly 1`] = `
     className="ebfgaU"
   >
     <input
-      className="anDgO"
+      className="czvjFH"
       name="input"
       onChange={[Function]}
       placeholder="Number of hands"
@@ -196,7 +198,7 @@ exports[`Game component renders correctly renders correctly 1`] = `
   </div>
   <div>
     <ul
-      className="dmhChW"
+      className="eVryjL"
     />
   </div>
 </div>

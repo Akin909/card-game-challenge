@@ -2,36 +2,52 @@ const path = require('path');
 const htmlWebPackPlugin = require('html-webpack-plugin');
 
 const htmlWebPackPluginConfig = new htmlWebPackPlugin({
-  template: './index.html',
-  filename: 'index.html',
-  inject: 'body',
+  template: 'index.html',
+  filename: './index.html',
+  inject: 'body'
 });
 
 module.exports = {
   //babel-polyfill allows use of features such as generators and async and
   //await
+  context: __dirname + '/src', //root of project
   entry: ['babel-polyfill', './index.js'],
   output: {
-    path: path.resolve('dist'),
-    filename: 'index_bundle.js',
+    path: __dirname + '/build',
+    filename: 'bundle.js'
   },
+
+  devtool: 'cheap-module-source-map',
+
+  devServer: {
+    contentBase: __dirname + '/src'
+  },
+
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: { presets: ['stage-2'] },
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ['file-loader']
       },
       {
-        test: /\.jsx$/,
-        loader: 'babel-loader',
-        exclude: /node_modules/,
-        query: { presets: ['stage-0'] },
+        test: /\.(png|jpg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: { limit: 10000 }
+          }
+        ]
       },
-      { loader: 'url-loader', test: /\\.gif$/ },
-      { test: /\.png/, loader: 'file-loader' },
-    ],
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader']
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: [/node_modules/],
+        use: [{ loader: 'babel-loader' }]
+      }
+    ]
   },
-  plugins: [htmlWebPackPluginConfig],
+  plugins: [htmlWebPackPluginConfig]
 };

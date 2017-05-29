@@ -1,4 +1,4 @@
-import * as logic from './../components/GameLogic.js';
+import * as logic from './../src/components/GameLogic.js';
 
 describe('Test Game Logic', () => {
   const testArr = [1, 2, 3, 4, 5, 6];

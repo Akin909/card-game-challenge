@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount, shallow } from 'enzyme';
-import Game from './../components/Game.jsx';
-import { Input } from './../components/Styled.jsx';
+import Game from './../src/components/Game.jsx';
+import { Input } from './../src/components/Styled.jsx';
 
 describe('Game', () => {
   let component, input;
