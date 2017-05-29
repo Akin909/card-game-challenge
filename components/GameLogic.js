@@ -78,9 +78,11 @@ export const chunkAnArray = (array, chunkSize) =>
     .filter(element => element);
 
 const createPlayerLookup = index => {
-  let playerString = 'Player ' + (index + 1);
+  let playerString = `Player ${index + 1}`;
   const player = {};
-  cardTypes.forEach(type => (player[type] = 0));
+  cardTypes.forEach(type => {
+    player[type] = 0;
+  });
   return {
     player,
     playerString
@@ -91,11 +93,10 @@ const createPlayerLookup = index => {
 //a count increases for that card;
 const specialScore = (array, props, scores) =>
   array.reduce((lookup, subarray, index) => {
-    let { player, playerString } = createPlayerLookup(lookup, index);
-    lookup.player = player;
+    let { player, playerString } = createPlayerLookup(index);
+    lookup[playerString] = player;
     subarray.forEach(card => {
-      //Count the cards by their types
-      lookup.player[card[props]]++;
+      lookup[playerString][card[props]]++;
     });
     for (let key in lookup.player) {
       switch (lookup.player[key]) {
@@ -116,8 +117,6 @@ const specialScore = (array, props, scores) =>
 const updateScore = (score, specialTally) => {
   return score.map(each => {
     let player = specialTally[each.player];
-    console.log('player', player.hasOwnProperty('pairs'));
-    console.log('player', player);
     if (player.hasOwnProperty('pairs')) {
       return {
         ...each,
@@ -184,6 +183,7 @@ export const calculateScore = (hand, players) => {
   }));
   const sorted = sortScores(allScores, sort);
   const pairs = specialScore(sorted, 'chosenKey', eachScore);
+  console.log('pairs', pairs);
   const updated = updateScore(eachScore, pairs);
   return {
     eachScore: updated,
