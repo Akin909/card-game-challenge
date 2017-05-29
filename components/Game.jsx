@@ -2,19 +2,16 @@ import React, { Component } from 'react';
 import uuid from 'uuid';
 
 import * as logic from './GameLogic.js';
+import GameResults from './GameResults.jsx';
 import {
-  GameStatus,
   Players,
   Score,
   CardContainer,
   Intro,
   Replay,
   Select,
-  Input,
-  Transition,
-  PlayerScore
+  Input
 } from './Styled.jsx';
-import Card from './Card.jsx';
 
 class Game extends Component {
   state = {
@@ -36,7 +33,6 @@ class Game extends Component {
     }
     const noOfCards = Number(input);
     const players = Number(select);
-    //Don't allow more cards to be dealt than are available
     if (noOfCards >= 26) {
       return this.setState({
         error: 'There are only 52 cards in a deck.. please enter a smaller number of cards to deal'
@@ -66,7 +62,7 @@ class Game extends Component {
     this.setState({ [event.target.name]: event.target.value });
 
   render() {
-    const { scores, cards, value, hand, error } = this.state;
+    const { select, scores, cards, value, hand, error } = this.state;
     return (
       <div>
         <Score>
@@ -88,7 +84,7 @@ class Game extends Component {
             size={5}
             id="players"
             name="select"
-            value={this.state.select}
+            value={select}
             onChange={this.handleChange}
           >
             {Array.from({ length: 25 }, (option, index) => (
@@ -100,23 +96,7 @@ class Game extends Component {
           </Select>
           <button onClick={this.handleClick}>Deal a Hand</button>
         </Intro>
-        <GameStatus>
-          <Transition
-            transitionName="card"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={500}
-          >
-            {scores.sorted &&
-              scores.sorted.map((player, index) => (
-                <CardContainer key={uuid()}>
-                  <PlayerScore>
-                    {`${scores.eachScore[index].player}, Score: ${scores.eachScore[index].score}`}
-                  </PlayerScore>
-                  {player.map(card => <Card key={uuid()} {...card} />)}
-                </CardContainer>
-              ))}
-          </Transition>
-        </GameStatus>
+        <GameResults scores={scores} />
         <div>
           <Replay>
             {logic.replay.map(step => <li key={uuid()}>{step}</li>)}
