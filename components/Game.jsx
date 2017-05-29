@@ -3,6 +3,7 @@ import uuid from 'uuid';
 
 import * as logic from './GameLogic.js';
 import GameResults from './GameResults.jsx';
+import Rules from './Rules.jsx';
 import {
   Players,
   Score,
@@ -22,6 +23,11 @@ class Game extends Component {
     scores: {},
     hand: []
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    //
+    return true;
+  }
 
   handleClick = event => {
     this.setState({ error: '' });
@@ -65,6 +71,7 @@ class Game extends Component {
     const { select, scores, cards, value, hand, error } = this.state;
     return (
       <div>
+        <Rules />
         <Score>
           {scores.winner &&
             (scores.winner === 'Tie'

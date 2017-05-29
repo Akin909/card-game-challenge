@@ -58,16 +58,24 @@ export const sortScores = (arr, sort) => {
 
 export const isUnique = array => array.length === new Set(array).size;
 
-export const determineWinner = (array, objArray) =>
-  //check if there are any duplicate scores if so return a tie, else compare
-  //the max score with the player name and return the winning player name
-  !isUnique(array)
+export const isATie = (array, objArray, highest) =>
+  array.indexOf(highest) !== array.lastIndexOf(highest)
     ? 'Tie'
-    : objArray.reduce(
-        (value, nextVal) =>
-          value.score === Math.max(...array) ? value.player : nextVal.player
-      );
+    : highestScore(objArray, highest);
 
+export const highestScore = (objArray, highest) =>
+  objArray.reduce(
+    (value, nextVal) =>
+      value.score === highest ? value.player : nextVal.player
+  );
+export const determineWinner = (numArray, objArray) => {
+  //check if there are any duplicate scores if so call is a tie, else compare
+  //the max score with the player name and return the winning player name
+  const highest = Math.max(...numArray);
+  return !isUnique(numArray)
+    ? isATie(numArray, objArray, highest)
+    : highestScore(objArray, highest);
+};
 //Returns a chunked array based on a given size, it is used to create an array of subarrays which are each players hand
 export const chunkAnArray = (array, chunkSize) =>
   array
@@ -77,15 +85,22 @@ export const chunkAnArray = (array, chunkSize) =>
     )
     .filter(element => element);
 
-//A beast.. checks the array of hands if a card type appears more than once
-//a count increases for that card;
-const specialScore = (array, props, scores) =>
+/**
+ * Count cards according to a criteria array
+ *
+ * @param {Array} array The cards by player
+ * @param {String} props the criterion on the card
+ * @param {Array} scores Numerical scores by player
+ * @param {Array} criteria Array for creation of a lookup table
+ * @returns {Object} A Lookup table with the count
+ */
+const specialScore = (array, props, scores, criteria) =>
   array.reduce((lookup, subarray, index) => {
-    let player = 'Player ' + (index + 1);
+    let player = `Player ${index + 1}`;
     lookup[player] = {};
-    cardTypes.forEach(type => (lookup[player][type] = 0));
+
+    criteria.forEach(type => (lookup[player][type] = 0));
     subarray.forEach(card => {
-      // Count the cards by type
       lookup[player][card[props]]++;
     });
     for (let key in lookup[player]) {
@@ -107,8 +122,6 @@ const specialScore = (array, props, scores) =>
 const updateScore = (score, specialTally) => {
   return score.map(each => {
     let player = specialTally[each.player];
-    console.log('player', player.hasOwnProperty('pairs'));
-    console.log('player', player);
     if (player.hasOwnProperty('pairs')) {
       return {
         ...each,
@@ -149,9 +162,11 @@ export const dealCards = (deck, noOfCards, hand, players) => {
   }
   const chosenSuite = suiteTypes[pickAtRandom(suiteTypes)];
   const chosenKey = cardTypes[pickAtRandom(cardTypes)];
-  replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
   const selectedCard = deck[chosenSuite][chosenKey];
+  replay.push(`The picked suite is ${chosenSuite} and the card type is ${chosenKey}`);
+
   selectedCard !== 0 ? (selectedCard.number = 0) : dealCards(deck);
+
   hand.push({
     description: `${chosenKey} of ${chosenSuite}`,
     suite: chosenSuite,
@@ -163,6 +178,7 @@ export const dealCards = (deck, noOfCards, hand, players) => {
     hand
   };
 };
+
 export const calculateScore = (hand, players) => {
   const chunkSize = hand.length / players;
   const allScores = chunkAnArray(hand, chunkSize);
@@ -174,11 +190,12 @@ export const calculateScore = (hand, players) => {
     score
   }));
   const sorted = sortScores(allScores, sort);
-  const pairs = specialScore(sorted, 'chosenKey', eachScore);
-  const updated = updateScore(eachScore, pairs);
+  const extraPoints = specialScore(sorted, 'chosenKey', eachScore, cardTypes);
+  const updated = updateScore(eachScore, extraPoints);
+  const newNumericalScores = updated.map(player => player.score);
   return {
     eachScore: updated,
-    winner: determineWinner(numericalScores, updated),
+    winner: determineWinner(newNumericalScores, updated),
     sorted
   };
 };
