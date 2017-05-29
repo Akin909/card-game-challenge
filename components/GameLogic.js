@@ -63,11 +63,10 @@ export const isATie = (array, objArray, highest) =>
     ? 'Tie'
     : highestScore(objArray, highest);
 
-export const highestScore = (objArray, highest) =>
-  objArray.reduce(
-    (value, nextVal) =>
-      value.score === highest ? value.player : nextVal.player
-  );
+export const highestScore = (objArray, highest) => {
+  const { player } = objArray.find(player => player.score === highest);
+  return player;
+};
 export const determineWinner = (numArray, objArray) => {
   //check if there are any duplicate scores if so call is a tie, else compare
   //the max score with the player name and return the winning player name
