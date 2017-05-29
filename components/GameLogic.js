@@ -85,6 +85,7 @@ const specialScore = (array, props, scores) =>
     lookup[player] = {};
     cardTypes.forEach(type => (lookup[player][type] = 0));
     subarray.forEach(card => {
+      // Count the cards by type
       lookup[player][card[props]]++;
     });
     for (let key in lookup[player]) {
