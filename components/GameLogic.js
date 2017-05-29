@@ -103,6 +103,7 @@ const specialScore = (array, props, scores, criteria) =>
       lookup[player][card[props]]++;
     });
     for (let key in lookup[player]) {
+      //TODO currently does not handle multiple pairs, ?spread an array
       switch (lookup[player][key]) {
         case 2:
           lookup[player].pairs = key;

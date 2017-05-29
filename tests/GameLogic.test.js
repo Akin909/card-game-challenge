@@ -37,6 +37,21 @@ describe('Test Game Logic', () => {
     const errorMessage = `There won't be enough cards for everybody 🙇🏾`;
     expect(actual.message).toBe(errorMessage);
   });
+  it('should return the highest score', () => {
+    const actual = logic.highestScore(
+      [{ score: 10, player: 'john' }, { score: 20, player: 'jane' }],
+      20
+    );
+    const expected = 'jane';
+    expect(actual).toBe(expected);
+  });
+
+  it('should chunk array into subarrays of a specified length', () => {
+    const actual = logic.chunkAnArray([2, 3, 4, 4], 2);
+    actual.forEach(array => {
+      expect(array.length).toEqual(2);
+    });
+  });
 
   it('return true if the suite and card are the same', () => {});
 });
