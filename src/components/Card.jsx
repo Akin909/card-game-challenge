@@ -37,7 +37,6 @@ const numbers = {
   queen: 'Q'
 };
 
-//<CardImg src={`./assets/cards/${cardImgId + '.png'}`} alt={description} />
 const Card = ({ chosenKey, suite, description }) => {
   const cardImgId = numbers[chosenKey] + suite.charAt(0).toUpperCase();
   return (

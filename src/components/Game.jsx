@@ -56,10 +56,10 @@ class Game extends Component {
     }
     //Set state to the deck at the end of the shuffle, also reset the current
     //hand
-    const currentDeck = newDeck.slice(-1);
+    const currentDeck = newDeck.slice(-1)[0];
     this.setState({
       lastGame: currentDeck,
-      scores: logic.calculateScore(currentDeck[0].hand, players),
+      scores: logic.calculateScore(currentDeck.hand, players),
       hand: []
     });
   };
